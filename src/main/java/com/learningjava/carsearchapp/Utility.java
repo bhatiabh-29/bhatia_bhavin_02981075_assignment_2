@@ -27,5 +27,11 @@ public class Utility {
         String strDate = dateFormat.format(date);  
         return strDate;
      }
+     
+     public static String dateToTimestampStr(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  
+        String strDate = dateFormat.format(date);  
+        return strDate;
+     }
    
 }

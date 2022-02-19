@@ -10,6 +10,7 @@ import com.learningjava.carsearchapp.model.Generator;
 import com.learningjava.carsearchapp.model.VehicleFleet;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.annotation.processing.Generated;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -78,6 +79,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
         txtModelNo = new javax.swing.JTextField();
         txtNoOfSeats = new javax.swing.JTextField();
         generateButton = new javax.swing.JButton();
+        txtLastUpdated = new javax.swing.JTextField();
 
         tblCarList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,6 +165,13 @@ public class UpdateJPanel extends javax.swing.JPanel {
             }
         });
 
+        txtLastUpdated.setEnabled(false);
+        txtLastUpdated.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLastUpdatedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,7 +187,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
                             .addComponent(lblModelNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblMakeYear, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSerialNumber, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(126, 126, 126)
+                        .addGap(342, 342, 342)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtMakeYear)
                             .addComponent(txtSerialNumber)
@@ -223,7 +232,9 @@ public class UpdateJPanel extends javax.swing.JPanel {
                         .addGap(103, 103, 103)
                         .addComponent(btnDeleteDetails)
                         .addGap(96, 96, 96)
-                        .addComponent(generateButton)))
+                        .addComponent(generateButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtLastUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -240,8 +251,9 @@ public class UpdateJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditDetails)
                     .addComponent(btnDeleteDetails)
-                    .addComponent(generateButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addComponent(generateButton)
+                    .addComponent(txtLastUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -271,11 +283,11 @@ public class UpdateJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSeats)
                     .addComponent(txtNoOfSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ChcAvailable)
                     .addComponent(ChcMaintainance, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
                 .addComponent(btnUpdateDetails)
                 .addGap(194, 194, 194))
         );
@@ -300,6 +312,14 @@ public class UpdateJPanel extends javax.swing.JPanel {
         ArrayList<Car> fleetOfCars = generator.generateCars(100);
        
         this.setFleetOfCars(fleetOfCars);
+        
+        Date date = new Date();
+        
+        String dateStr = Utility.dateToTimestampStr(date);
+        
+        txtLastUpdated.setEnabled(false);
+
+        txtLastUpdated.setText("Last updated: " + dateStr);
     
     }//GEN-LAST:event_generateButtonActionPerformed
 
@@ -417,6 +437,10 @@ public class UpdateJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_ChcAvailableActionPerformed
 
+    private void txtLastUpdatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastUpdatedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLastUpdatedActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox ChcAvailable;
@@ -436,6 +460,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblCarList;
     private javax.swing.JTextField txtCarType;
     private javax.swing.JTextField txtCity;
+    private javax.swing.JTextField txtLastUpdated;
     private javax.swing.JTextField txtMakeYear;
     private javax.swing.JTextField txtManufacturer;
     private javax.swing.JTextField txtModelNo;
