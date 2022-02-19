@@ -126,7 +126,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-        
+        SearchJPanel searchJPanel = new SearchJPanel(vehicleFleet);
+        SplitPane.setRightComponent(searchJPanel);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
@@ -140,7 +141,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-        UpdateJPanel updateJPanel = new UpdateJPanel(vehicleFleet);
+        UpdateJPanel updateJPanel = new UpdateJPanel( car,vehicleFleet);
         SplitPane.setRightComponent(updateJPanel);
         
     }//GEN-LAST:event_btnViewActionPerformed

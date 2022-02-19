@@ -48,8 +48,7 @@ public class VehicleFleet {
         this.fleetOfCars = fleetOfCars;
     }
     
-    public Car addNewCar(){
-        Car newCar = new Car();
+    public Car addNewCar(Car newCar){
         fleetOfCars.add(newCar);
         return newCar;
     }
@@ -66,14 +65,22 @@ public class VehicleFleet {
     returns: Arraylist of cars of type sedan*/
     
     public ArrayList<Car> getCarsByType(String typeOfCar){
-        ArrayList<Car> cars = new ArrayList<Car>();
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByType(cars, typeOfCar);
+    }
+    
+    
+    public static ArrayList<Car> getCarsByType(ArrayList<Car> cars, String typeOfCar){
+        ArrayList<Car> filteredCars = new ArrayList<>();
         for (int i = 0; i < cars.size(); i++){
-            if ( cars.get(i).equals(typeOfCar)){
-                cars.add(cars.get(i));
+            if (cars.get(i).getType().equals(typeOfCar)){
+                filteredCars.add(cars.get(i));
             }
         }
-        return cars;
+        return filteredCars;
     }
+   
+    
     
     /* 2. How many cars are currently available.
    
@@ -82,15 +89,15 @@ public class VehicleFleet {
     Retruns : Count of available cars.
     */
     
-    public int getNumOfAvailableCars() {
-        int count = 0;
-        for(Car car : fleetOfCars) {
-            if (car.isAvailable()) {
-                count += 1;
-            }
-        }
-         return count;
-    }
+//    public int getNumOfAvailableCars() {
+//        int count = 0;
+//        for(Car car : fleetOfCars) {
+//            if (car.isAvailable()) {
+//                count += 1;
+//            }
+//        }
+//         return count;
+//    }
     
     
     
@@ -102,14 +109,28 @@ public class VehicleFleet {
     Returns: ArrayList of fleetOfCars made by Tyota
     */
     public ArrayList<Car> getCarsByManufacturer (String manufacturer){
-        ArrayList<Car> cars = new ArrayList<>();
-        for (int i = 0; i < cars.size(); i ++ ){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByManufacturer(cars, manufacturer);
+    }
+    
+    public static ArrayList<Car> getCarsByManufacturer(ArrayList<Car> cars, String manufacturer){
+        ArrayList<Car> filteredCars = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++){
             if (cars.get(i).getManufacturer().equals(manufacturer)){
-                cars.add(cars.get(i));
+                filteredCars.add(cars.get(i));
             }
         }
-        return cars;
+        return filteredCars;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+   
         
     
     
@@ -118,15 +139,19 @@ public class VehicleFleet {
     Ex: getCarsByMakeYear(2022)
     Returns: ArrayList of fleetOfCars made in the year 2022*/
     
+   public ArrayList<Car> getCarsByMakeYear(int makeYear){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByMakeYear(cars, makeYear);
+    }
    
-    public ArrayList<Car> getCarsByMakeYear (int makeYear){
-    ArrayList<Car> cars = new ArrayList<>();
+    public static ArrayList<Car> getCarsByMakeYear (ArrayList<Car> cars,int makeYear){
+    ArrayList<Car> filteredCars = new ArrayList<>();
     for(int i = 0; i < cars.size(); i++){
         if(cars.get(i).getMakeYear() == makeYear){
-            cars.add(cars.get(i));
+            filteredCars.add(cars.get(i));
         }
     }
-    return cars;
+    return filteredCars;
 }
     
     /* 5.List all cars with a minimum of minNum seats but no more than maxNum seats.
@@ -139,16 +164,19 @@ public class VehicleFleet {
 
     */
     
-    public ArrayList<Car> getCarsByNumOfSeats(int minNum  , int maxNum){
-    ArrayList<Car> cars = new ArrayList();
+    public ArrayList<Car> getCarsByNumOfSeats(int noOfSeats){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByNumOfSeats(cars, noOfSeats);
+    }
+   
+    public static ArrayList<Car> getCarsByNumOfSeats (ArrayList<Car> cars,int noOfSeats){
+    ArrayList<Car> filteredCars = new ArrayList<>();
     for(int i = 0; i < cars.size(); i++){
-        if(cars.get(i).getNoOfSeats() <= maxNum &&
-        cars.get(i).getNoOfSeats() >= minNum){
-            cars.add(cars.get(i));
+        if(cars.get(i).getNoOfSeats() == noOfSeats){
+            filteredCars.add(cars.get(i));
         }
     }
-      return cars;
-
+    return filteredCars;
 }
    
     
@@ -158,14 +186,28 @@ public class VehicleFleet {
     Ex: getCarsBySerialNum(123)
     Returns: car with serial number 123
     */
-    public Car getCarBySerialNum(int carSerialNum){
-       for (Car car: fleetOfCars){
-           if(car.getSerialNum() == carSerialNum){
-               return car;
-           }
-       }
-       return null;
+//    public Car getCarBySerialNum(int carSerialNum){
+//       for (Car car: fleetOfCars){
+//           if(car.getSerialNum() == carSerialNum){
+//               return car;
+//           }
+//       }
+//       return null;
+//    }
+    public ArrayList<Car> getCarBySerialNum(int carSerialNum){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarBySerialNum(cars, carSerialNum);
     }
+   
+    public static ArrayList<Car> getCarBySerialNum (ArrayList<Car> cars,int carSerialNum){
+    ArrayList<Car> filteredCars = new ArrayList<>();
+    for(int i = 0; i < cars.size(); i++){
+        if(cars.get(i).getSerialNum()== carSerialNum){
+            filteredCars.add(cars.get(i));
+        }
+    }
+    return filteredCars;
+}
     
     
     /* 7. List all cars given the model number.
@@ -174,16 +216,25 @@ public class VehicleFleet {
     Ex: getCarsByModelNum("Model-X")
     Returns: cars with model number Model-X
     */
-    public ArrayList<Car> getCarsByModelNum(String modelNum){
-    ArrayList<Car> cars = new ArrayList<>();
-    for (int i =0; i < cars.size(); i++){
-        if (cars.get(i).getModelNo().equals(modelNum)){
-            cars.add(cars.get(i));
-        }
-            
-        }
-    return cars;
+    public ArrayList<Car> getCarsByModelNum (String modelNum){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByModelNum(cars, modelNum);
     }
+    
+    public static ArrayList<Car> getCarsByModelNum(ArrayList<Car> cars, String modelNum){
+        ArrayList<Car> filteredCars = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++){
+            if (cars.get(i).getModelNo().equals(modelNum)){
+                filteredCars.add(cars.get(i));
+            }
+        }
+        return filteredCars;
+    }
+    
+    
+    
+    
+    
     
     
     /* 8. List all the car manufacturers used by (this) Uber*/
@@ -198,16 +249,20 @@ public class VehicleFleet {
     Returns: cars within the city boston*/
     
     
-    public  ArrayList<Car> getCarsByCity (String city){
-      ArrayList<Car> cars = new ArrayList<>();
-      for (int i = 0; i < cars.size(); i++){
-        if (cars.get(i).getCity().equals(city)){
-            cars.add(cars.get(i));
-        }
-        
+    public ArrayList<Car> getCarsByCity (String city){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getCarsByCity(cars, city);
     }
-      return cars;
-}
+    
+    public static ArrayList<Car> getCarsByCity(ArrayList<Car> cars, String city){
+        ArrayList<Car> filteredCars = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++){
+            if (cars.get(i).getCity().equals(city)){
+            filteredCars.add(cars.get(i));
+            }
+        }
+        return filteredCars;
+    }
     
     /* 11. List all cars that have expired maintenance certificates.
     This function checks the cars with expired maintaiance certificate and returns
@@ -235,11 +290,11 @@ public class VehicleFleet {
     
     */
     
-    public ArrayList<Car> getAvailableCars() {
-        
-        return null;
-        
-    }
+//    public ArrayList<Car> getAvailableCars() {
+//        
+//        return null;
+//        
+//    }
     
     /*
     Return all the cars that are available in the city
@@ -248,10 +303,25 @@ public class VehicleFleet {
     Returns : List of available cars in newyork 
     
     */
-    public ArrayList<Car> getAvailableCars(String cityName) {
-        
-        return null;
-        
+//    public ArrayList<Car> getAvailableCars(String cityName) {
+//        
+//        return null;
+//        
+//    }
+    
+    public ArrayList<Car> getAvailableCars (Boolean isavailable){
+        ArrayList<Car> cars = getFleetOfCars();
+        return VehicleFleet.getAvailableCars(cars, isavailable);
+    }
+    
+    public static ArrayList<Car> getAvailableCars(ArrayList<Car> cars, Boolean isavailable){
+        ArrayList<Car> filteredCars = new ArrayList<>();
+        for (int i = 0; i < cars.size(); i++){
+            if (cars.get(i).isAvailable){
+                filteredCars.add(cars.get(i));
+            }
+        }
+        return filteredCars;
     }
     
     

@@ -4,6 +4,7 @@
  */
 package com.learningjava.carsearchapp.userinterface;
 
+import com.learningjava.carsearchapp.Utility;
 import com.learningjava.carsearchapp.model.Car;
 import com.learningjava.carsearchapp.model.Generator;
 import com.learningjava.carsearchapp.model.VehicleFleet;
@@ -22,11 +23,13 @@ public class UpdateJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewPanel
      */
-    Car car;
+    Car updateCar;
     VehicleFleet vehicleFleet;
-    public UpdateJPanel(VehicleFleet vehicleFleet) {
+    public UpdateJPanel(Car updateCar,VehicleFleet vehicleFleet) {
         initComponents();
-        this.car = car;
+        this.updateCar = updateCar;
+        displayProfile ();
+      
         
         this.setVehicleFleet(vehicleFleet);
         
@@ -98,6 +101,11 @@ public class UpdateJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblCarList);
 
         btnUpdateDetails.setText("Update Details");
+        btnUpdateDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateDetailsActionPerformed(evt);
+            }
+        });
 
         btnEditDetails.setText("Edit Details");
         btnEditDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +138,11 @@ public class UpdateJPanel extends javax.swing.JPanel {
         ChcMaintainance.setText("Maintainance Date ");
 
         ChcAvailable.setText("Available");
+        ChcAvailable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChcAvailableActionPerformed(evt);
+            }
+        });
 
         txtMakeYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,7 +297,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
         // TODO add your handling code here:
         Generator generator = new Generator();
-        ArrayList<Car> fleetOfCars = generator.generateCars(10);
+        ArrayList<Car> fleetOfCars = generator.generateCars(100);
        
         this.setFleetOfCars(fleetOfCars);
     
@@ -301,7 +314,7 @@ public class UpdateJPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblCarList.getModel();
         ArrayList<Car> cars =  this.vehicleFleet.getFleetOfCars();
         
-        Car updateCar = cars.get(selectedRowIndex);
+        updateCar = cars.get(selectedRowIndex);
         txtCity.setText(updateCar.getCity());
         txtCarType.setText(updateCar.getType());
         txtMakeYear.setText( String.valueOf(updateCar.getMakeYear()));
@@ -309,8 +322,10 @@ public class UpdateJPanel extends javax.swing.JPanel {
         txtModelNo.setText(updateCar.getModelNo());
         txtNoOfSeats.setText( String.valueOf(updateCar.getNoOfSeats()));
         txtSerialNumber.setText( String.valueOf(updateCar.getSerialNum()));
-        
+        ChcAvailable.setSelected(updateCar.isAvailable());
+//                ChcAvailable.setEnabled(false);
 
+        
         
     }//GEN-LAST:event_btnEditDetailsActionPerformed
 
@@ -336,6 +351,71 @@ public class UpdateJPanel extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_btnDeleteDetailsActionPerformed
+
+    private void btnUpdateDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDetailsActionPerformed
+        // TODO add your handling code here:
+        String type = txtCarType.getText();
+        String city = txtCity.getText();
+        String makeYrTxt = txtMakeYear.getText();
+        String manufacturer = txtManufacturer.getText();
+        String modelNo = txtModelNo.getText();
+        String numSeatsTxt = txtNoOfSeats.getText();
+        String serialNumTxt = txtSerialNumber.getText();
+        
+        if (!Car.validateNotNull(type, manufacturer, 
+                makeYrTxt, numSeatsTxt, 
+                serialNumTxt, modelNo, city)) {
+            JOptionPane.showMessageDialog(this, 
+                    "Please enter correct details, empty fields are not allowed.");
+            return;
+        }
+        
+        if (!Utility.isNum(makeYrTxt)) {
+            JOptionPane.showMessageDialog(this, "Incorrect Details for Year");
+            return;
+        }
+        if (!Utility.isNum(numSeatsTxt)) {
+            JOptionPane.showMessageDialog(this, "Incorrect Details for seats");
+            return;
+        }
+        if (!Utility.isNum(serialNumTxt)) {
+            JOptionPane.showMessageDialog(this, "Incorrect Details for serial num");
+            return;
+        }
+        if (serialNumTxt.length() < 4 || serialNumTxt.length() > 10) {
+            JOptionPane.showMessageDialog(this, "Serial number looks incorrect.");
+            return;
+        }
+        
+        
+        
+        int makeYear = Integer.parseInt(makeYrTxt);
+  
+        int noOfSeats = Integer.parseInt(numSeatsTxt);
+        int serialNum = Integer.parseInt(serialNumTxt);
+        
+     
+        
+        if (makeYear <= 1990 || makeYear >= 2022) {
+            JOptionPane.showMessageDialog(this, "Make year looks incorrect.");
+            return;
+        }
+        if (noOfSeats <= 4 || noOfSeats >= 10) {
+            JOptionPane.showMessageDialog(this, "Seat number looks incorrect.");
+            return;
+        }
+        
+        
+        
+        
+       updateRecords();
+       JOptionPane.showMessageDialog(this, "Records Updated");
+    }//GEN-LAST:event_btnUpdateDetailsActionPerformed
+
+    private void ChcAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChcAvailableActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ChcAvailableActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -364,9 +444,13 @@ public class UpdateJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateRecords() {
+          ArrayList<Car> cars = this.vehicleFleet.getFleetOfCars();
+          populateRecords(cars);
+     }
+    
+    private void populateRecords(ArrayList<Car> cars) {
         DefaultTableModel model = (DefaultTableModel) tblCarList.getModel();
         model.setRowCount(0);
-        ArrayList<Car> cars = this.vehicleFleet.getFleetOfCars();
         for (Car car : cars) {
             
             Object[] rowData = {
@@ -378,25 +462,55 @@ public class UpdateJPanel extends javax.swing.JPanel {
                 car.getMakeYear(),
                 car.getSerialNum(),
                 car.getModelNo(),
-                car.getCarMaintainanceDate()
-                
-            };
+                car.getCarMaintainanceDate(),
+                car.isAvailable()
+               };
             model.addRow(rowData);
         }
+    }
+    
+    
+    public void updateRecords(){
+      
+        this.updateCar.setCity(txtCity.getText());
+        this.updateCar.setNoOfSeats(Integer.parseInt(txtNoOfSeats.getText()));
+        this.updateCar.setMakeYear(Integer.parseInt(txtMakeYear.getText()));
+        this.updateCar.setManufacturer(txtManufacturer.getText());
+        this.updateCar.setModelNo(txtModelNo.getText());
+        this.updateCar.setSerialNum(Integer.parseInt(txtSerialNumber.getText()));
+        this.updateCar.setType(txtCarType.getText());
+//        this.updateCar.setCarMaintainanceDate(Integer.parseInt(ChcMaintainance.getText()));
+        this.updateCar.setIsAvailable(ChcAvailable.isSelected());
         
+        
+        populateRecords();
+        
+        
+     }
+    
+   
+   public static boolean isNum(String input){
+        try {
+            Integer.parseInt(input);
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
-//public void displayProfile (){
-//    
-//    txtCarType.setText(car.getType());
-//    txtManufacturer.setText(car.getManufacturer());
-//    txtCity.setText (car.getCity());
-//    txtMakeYear.setText(car.getCity());
-//    txtModelNo.setText(car.getModelNo());
-//    txtSerialNumber.setText(String.valueOf(car.getSerialNum()));
-//    txtNoOfSeats.setText(String.valueOf(car.getNoOfSeats()));
+    public void displayProfile (){
+
+        txtCarType.setText(updateCar.getType());
+        txtManufacturer.setText(updateCar.getManufacturer());
+        txtCity.setText (updateCar.getCity());
+        txtMakeYear.setText(updateCar.getCity());
+        txtModelNo.setText(updateCar.getModelNo());
+        txtSerialNumber.setText(String.valueOf(updateCar.getSerialNum()));
+        txtNoOfSeats.setText(String.valueOf(updateCar.getNoOfSeats()));
+
+        }
     
-//    }
+    
 
 
 }

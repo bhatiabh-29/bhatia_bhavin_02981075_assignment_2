@@ -4,46 +4,12 @@
  */
 package com.learningjava.carsearchapp.model;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author bhavinbhatia
  */
-//
-//car class 
-//attributes car isavailabe 
-// car manufacturer 
-//year maf 
-//
-//no of seats 
-//serial num
-//model num
-//city 
-//maintainance exp date 
-//getters setters 
-//helper function 
-//
-//class city fleet 
-//listofcars 
-//last updated date for fleet 
-//
-//helper function  manufactureer,  seat, getcar serial number, getcar modelnumber, getcars cityname,
-//getexpiremaintaiance
-
-
-
-//Attributes of the car class 
-//typeOfCar;
-//noOfAvailableCars;
-//manufacturer;
-//makeYear;
-//noOfSeats;
-//carSerialNum;
-//carModel;
-//city;
-//carMaintainanceDate;
-//boolean isAvailable;
-
-
 
 public class Car {
     
@@ -103,13 +69,6 @@ public class Car {
         this.type = type;
     }
 
-//    public int getNoOfAvailableCars() {
-//        return noOfAvailableCars;
-//    }
-//
-//    public void setNoOfAvailableCars(int noOfAvailableCars) {
-//        this.noOfAvailableCars = noOfAvailableCars;
-//    }
 
     public String getManufacturer() {
         return manufacturer;
@@ -167,10 +126,35 @@ public class Car {
         this.carMaintainanceDate = carMaintainanceDate;
     }
 
-    boolean isAvailable() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean isAvailable() {
+        return this.isAvailable;
     }
     
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+    
+    
+    public static  boolean validateNotNull( String type, 
+            String manufacturer, 
+            String makeYear, 
+            String noOfSeats,
+            String serialNum, 
+            String modelNo,
+            String city) {
+    
+          if (type == null || type.isEmpty() ||
+                manufacturer == null || manufacturer.isEmpty() ||
+                     makeYear == null || makeYear.isEmpty() ||
+                        noOfSeats == null || noOfSeats.isEmpty() ||
+                            serialNum == null || serialNum.isEmpty() ||
+                                modelNo == null || modelNo.isEmpty() ||
+                                    city == null || city.isEmpty()){
+            
+            return false;
+        }
+        return true;
+    }
     
 }
 
