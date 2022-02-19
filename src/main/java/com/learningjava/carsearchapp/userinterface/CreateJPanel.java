@@ -247,7 +247,7 @@ public class CreateJPanel extends javax.swing.JPanel {
                 serialNum,
                 modelNo,
                 city,
-                0,
+                null,
                 ChcAvailable.isSelected()
                 );
         

@@ -296,6 +296,10 @@ public class SearchJPanel extends javax.swing.JPanel {
 
     private void chcMaintainanceExpiredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chcMaintainanceExpiredActionPerformed
         // TODO add your handling code here:
+        
+        ArrayList<Car> filteredCars = searchHelper(vehicleFleet.getFleetOfCars());
+        populateCarRecords(filteredCars);
+        
     }//GEN-LAST:event_chcMaintainanceExpiredActionPerformed
 
     private void chcIsAvailable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chcIsAvailable1ActionPerformed
@@ -357,6 +361,8 @@ public class SearchJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
 
         for (Car car : cars) {
+            String mantenanceDate = Utility.dateToString(
+                    car.getCarMaintainanceDate());
 
                Object[] rowData = {
                    car.getType(),
@@ -367,7 +373,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                    car.getMakeYear(),
                    car.getSerialNum(),
                    car.getModelNo(),
-                   car.getCarMaintainanceDate(),
+                   mantenanceDate,
                    car.isAvailable()
 
                };
@@ -415,10 +421,14 @@ public class SearchJPanel extends javax.swing.JPanel {
         }
         
         if(chcIsAvailable1.isSelected()){
-            boolean isAvailable = Boolean.valueOf(chcIsAvailable1.isSelected());
-            cars = vehicleFleet.getAvailableCars(cars,isAvailable);
+            boolean isSelected = Boolean.valueOf(chcIsAvailable1.isSelected());
+            cars = vehicleFleet.getAvailableCars(cars,isSelected);
         }
         
+        if(chcMaintainanceExpired.isSelected()){
+            boolean isSelected = Boolean.valueOf(chcIsAvailable1.isSelected());
+            cars = vehicleFleet.getCarsByExpiredMaintenance(cars);
+        }
              return cars;
        
        

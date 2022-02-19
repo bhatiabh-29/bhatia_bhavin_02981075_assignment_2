@@ -453,17 +453,21 @@ public class UpdateJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         for (Car car : cars) {
             
+            String mantenanceDateStr = Utility.dateToString(
+                    car.getCarMaintainanceDate()
+            );
+            
             Object[] rowData = {
                 car.getType(),
             
-                car.getManufacturer(),
-                car.getCity(),
-                car.getNoOfSeats(),
-                car.getMakeYear(),
-                car.getSerialNum(),
-                car.getModelNo(),
-                car.getCarMaintainanceDate(),
-                car.isAvailable()
+                    car.getManufacturer(),
+                    car.getCity(),
+                    car.getNoOfSeats(),
+                    car.getMakeYear(),
+                    car.getSerialNum(),
+                    car.getModelNo(),
+                    mantenanceDateStr,             
+                    car.isAvailable()
                };
             model.addRow(rowData);
         }

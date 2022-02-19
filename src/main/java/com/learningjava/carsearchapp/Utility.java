@@ -4,6 +4,10 @@
  */
 package com.learningjava.carsearchapp;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author bhavinbhatia
@@ -17,5 +21,11 @@ public class Utility {
         }
         return true;
     }
-    
+     
+     public static String dateToString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");  
+        String strDate = dateFormat.format(date);  
+        return strDate;
+     }
+   
 }

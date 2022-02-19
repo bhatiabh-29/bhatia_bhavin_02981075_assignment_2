@@ -6,7 +6,10 @@
 package com.learningjava.carsearchapp.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -38,6 +41,18 @@ public class Generator {
      
     }
     
+    public static Date between(Date startInclusive, Date endExclusive) {
+        
+            // Taken from : https://www.baeldung.com/java-random-dates
+        long startMillis = startInclusive.getTime();
+        long endMillis = endExclusive.getTime();
+        long randomMillisSinceEpoch = ThreadLocalRandom
+          .current()
+          .nextLong(startMillis, endMillis);
+
+        return new Date(randomMillisSinceEpoch);
+    }
+    
     public Car generateCar() {
         Random random = new Random();
         String manufacturer = MANUFACTURES[random.nextInt(0, 
@@ -49,10 +64,17 @@ public class Generator {
         int makeYear = random.nextInt(MAKE_YEAR_START, MAKE_YEAR_END);
         String type = TYPES[random.nextInt(0, TYPES.length)];
         int serialNumber = random.nextInt(1111, 9999);
+        
+        long today = new Date().getTime();
+        long aDay = TimeUnit.DAYS.toMillis(1);
+        Date startDate = new Date(today - aDay * 365 * 2);
+        Date endDate = new Date(today + aDay * 365 * 2);
+        Date randomDate = Generator.between(startDate, 
+               endDate);
         Car car = new Car(
                 type,manufacturer, makeYear, numSeats, serialNumber,
                 model, city,
-                1231, random.nextBoolean()
+                randomDate, random.nextBoolean()
         );
         return car;
     }

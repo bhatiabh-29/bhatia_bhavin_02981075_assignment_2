@@ -4,6 +4,7 @@
  */
 package com.learningjava.carsearchapp.model;
 
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +22,9 @@ public class Car {
     private int serialNum;
     private String modelNo;
     private String city;
-    private int carMaintainanceDate;
+    private Date carMaintainanceDate;
     boolean isAvailable;
+    
     
     /*
     types = [ "sedan", "suv", "muv"]
@@ -38,7 +40,7 @@ public class Car {
     
     public Car(String type, String manufacturer, 
     int makeYear, int noOfSeats, int serialNum, String modelNo, String city, 
-        int carMaintainanceDate, boolean isAvailable){
+        Date carMaintainanceDate, boolean isAvailable){
         
         
         this.type = type;
@@ -118,11 +120,11 @@ public class Car {
         this.city = city;
     }
 
-    public int getCarMaintainanceDate() {
+    public Date getCarMaintainanceDate() {
         return carMaintainanceDate;
     }
 
-    public void setCarMaintainanceDate(int carMaintainanceDate) {
+    public void setCarMaintainanceDate(Date carMaintainanceDate) {
         this.carMaintainanceDate = carMaintainanceDate;
     }
 
