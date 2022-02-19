@@ -359,10 +359,21 @@ public class SearchJPanel extends javax.swing.JPanel {
         
         DefaultTableModel model = (DefaultTableModel) tblCarList.getModel();
         model.setRowCount(0);
+        
+       
 
         for (Car car : cars) {
-            String mantenanceDate = Utility.dateToString(
-                    car.getCarMaintainanceDate());
+           
+            String mantenanceDate = null;
+            if(car.getCarMaintainanceDate() != null) {
+                 mantenanceDate = Utility.dateToString(
+                         car.getCarMaintainanceDate()
+                    );
+            }
+            
+            
+
+            
 
                Object[] rowData = {
                    car.getType(),

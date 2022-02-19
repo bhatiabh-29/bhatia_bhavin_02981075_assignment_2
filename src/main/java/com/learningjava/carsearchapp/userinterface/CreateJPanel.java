@@ -232,7 +232,7 @@ public class CreateJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Make year looks incorrect.");
             return;
         }
-        if (noOfSeats <= 4 || noOfSeats >= 10) {
+        if (noOfSeats < 4 || noOfSeats >= 10) {
             JOptionPane.showMessageDialog(this, "Seat number looks incorrect.");
             return;
         }

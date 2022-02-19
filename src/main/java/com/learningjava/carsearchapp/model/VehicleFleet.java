@@ -195,6 +195,9 @@ public class VehicleFleet {
         for (int i = 0; i < cars.size(); i++){
             Car car = cars.get(i);
            Date expiryDate =  car.getCarMaintainanceDate();
+           if (expiryDate == null) {
+               continue;
+           }
            Date todaysDate = new Date();
            if (todaysDate.compareTo(expiryDate) > 0) {
                filteredCars.add(car);
